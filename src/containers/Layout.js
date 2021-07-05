@@ -13,7 +13,7 @@ function Layout(props) {
   let location = useLocation()
   let history = useHistory();
 
-  const { tikiPrice, tikiVolume, setTikiVolume, wallet, getWallet, setWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, recent, address, nextPayoutProgress, setNextPayoutProgress, nextPayoutValue, setNextPayoutValue, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
+  const { tikiPrice, tikiVolume, fishPrice, setTikiVolume, wallet, getWallet, setWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, recent, address, nextPayoutProgress, setNextPayoutProgress, nextPayoutValue, setNextPayoutValue, setHoldings, setPaid, setLastPaid, setRecent, setAddress } = props
 
   useEffect(() => {
     closeSidebar()
@@ -39,14 +39,14 @@ function Layout(props) {
                     key={i}
                     exact={true}
                     path={`${route.path}`}
-                    render={(props) => <route.component {...props} tikiVolume={tikiVolume} setTikiVolume={setTikiVolume} getWallet={getWallet} wallet={wallet} setWallet={setWallet} tikiPrice={tikiPrice} highestBuyers={highestBuyers} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} />}
+                    render={(props) => <route.component {...props} fishPrice={fishPrice} tikiVolume={tikiVolume} setTikiVolume={setTikiVolume} getWallet={getWallet} wallet={wallet} setWallet={setWallet} tikiPrice={tikiPrice} highestBuyers={highestBuyers} bnbHoldings={bnbHoldings} bnbPrice={bnbPrice} nextPayoutValue={nextPayoutValue} setNextPayoutValue={setNextPayoutValue} totalPaid={totalPaid} address={address} setAddress={setAddress} holdings={holdings} setHoldings={setHoldings} paid={paid} setPaid={setPaid} lastPaid={lastPaid} setLastPaid={setLastPaid} nextPayoutProgress={nextPayoutProgress} setNextPayoutProgress={setNextPayoutProgress} />}
                   />
                 ) : null
               })}
             </Switch>
           </Suspense> : 
           <div className="w-full h-full flex justify-center">
-            <img src='https://uploads-ssl.webflow.com/60c7783699e1051d74062f79/60c9ca23cfdaec309091e4b0_Logo---Animation--05.gif' className="w-1/4 h-1/3 mt-48 inline-block align-middle"/>
+            <img src='https://lh3.googleusercontent.com/proxy/7BmBsN-cM71vyh3KqgjRQucPZAMO3YUS1C4ZSdeaX73_emNxg-wT40EvzExcm1lR4gUwbEA5Xp23AyeCVIQooDd7ceUGVg' className="w-1/4 h-1/3 mt-48 inline-block align-middle"/>
           </div>}
         </Main>
       </div>

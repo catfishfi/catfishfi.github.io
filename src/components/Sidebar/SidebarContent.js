@@ -13,7 +13,7 @@ function SidebarContent() {
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       <a className="flex ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
-        <img className="mr-2 w-6 h-8" src="https://uploads-ssl.webflow.com/60c7783699e1051d74062f79/60c77ebf3b808e1b80cdb0cb_Tiki03-p-500.png" /><span className="self-center">The TIKI Bar</span>
+        <img className="mr-2 w-6 h-8" src={require('../../assets/img/logo.png')} /><span className="self-center">CatFish Lounge</span>
       </a>
       <ul className="mt-6">
         {routes.map((route) => {

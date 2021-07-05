@@ -14,7 +14,7 @@ import numberWithCommas from '../utils/numberWithCommas'
 
 function Dashboard(props) {
 
-  const { tikiPrice, tikiVolume, setTikiVolume, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
+  const { tikiPrice, tikiVolume, fishPrice, setTikiVolume, wallet, setWallet, getWallet, highestBuyers, bnbPrice, bnbHoldings, totalPaid, holdings, paid, lastPaid, address, nextPayoutProgress, nextPayoutValue, setHoldings, setPaid, setLastPaid, setAddress, setNextPayoutProgress, setNextPayoutValue } = props
 
   const [reinvestContract, setReinvestContract] = useState(null)
   const [tikiContract, setTikiContract] = useState(null)
@@ -23,7 +23,7 @@ function Dashboard(props) {
   const [reinvestAmount, setReinvestAmount] = useState((Number(bnbHoldings)-((2000000*15*1000000000)/1e18)) > 0 ? (Number(bnbHoldings)-((2000000*15*1000000000)/1e18)).toFixed(4) : '0')
 
   const reinvestInput = <><span>Reinvest </span><input onClick={e => e.stopPropagation()} type="text" className="w-1/3 text-black text-center" value={reinvestAmount} onChange={e => setReinvestAmount(isNaN(e.target.value) ? reinvestAmount : e.target.value)} /><span> BNB (click here to confirm)</span></>
-  const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' BNB' : 'Processing'}</span>{Date.now()-lastPaid >= 3600000 ? ` | ${nextPayoutProgress}%` : ` | ${(60-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
+  const payoutText = <><span className="text-yellow-300">{nextPayoutValue != 0 ? nextPayoutValue + ' FISH' : 'Processing'}</span>{Date.now()-lastPaid >= 300000 ? ` | ${nextPayoutProgress}%` : ` | ${(5-((Date.now()-lastPaid)/60000)).toFixed(0)}m`}</>
 
   const earningsInDollars = tikiVolume == 0 ? (holdings/1000000000)*220000 : (holdings/1000000000)*(tikiVolume*0.11)
   const earningsInBnb = earningsInDollars/bnbPrice
@@ -39,12 +39,12 @@ function Dashboard(props) {
   return (
     <div className="pb-10">
 
-      <PageTitle className="text-3xl">TIKI Earnings Manager</PageTitle>
+      <PageTitle className="text-3xl">CatFish Earnings Manager</PageTitle>
 
-      <CTA holdings={holdings} text={(address !== "" && ethers.utils.isAddress(address) && bnbHoldings !== 0) ? `${address} | BNB In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
+      <CTA holdings={holdings} text={(address !== "" && ethers.utils.isAddress(address) && bnbHoldings !== 0) ? `${address} | MATIC In Your Wallet: ${bnbHoldings} ($${numberWithCommas((bnbHoldings*bnbPrice).toFixed(2))})` : address} />
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Your TIKI Holdings" value={`${numberWithCommas(holdings)} TIKI`}>
+        <InfoCard title="Your CatFish Holdings" value={`${numberWithCommas(holdings)} CatFish`}>
           <RoundIcon
             icon={CoinsIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -62,7 +62,7 @@ function Dashboard(props) {
               className="mr-4"
             />
             <div>
-              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total BNB Paid</p>
+              <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total FISH Paid</p>
               
               <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`}</span><span className="italic font-light text-md text-green-400"> ~${numberWithCommas(((paid / 1e18)*bnbPrice).toFixed(2))}</span></p>
             </div>
@@ -173,58 +173,12 @@ function Dashboard(props) {
 
         <Card className="col-span-2">
           <CardBody className="flex flex-col text-center items-center">
-            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
-            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid To TIKI Holders</p><br/>
-            <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">BNB</span><br/> = ${numberWithCommas((bnbPrice*totalPaid).toFixed(0))}</p>
+            <img className="w-48 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
+            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total FISH Paid To CatFish Holders</p><br/>
+            <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">FISH</span><br/> = ${numberWithCommas((fishPrice*totalPaid).toFixed(0))}</p>
           </CardBody>
         </Card>
 
-        <Card className="col-span-2">
-          <CardBody className="flex flex-col text-center items-center">
-            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on a default of the last 24h of trading volume<br/>Change the volume to predict earnings based on other volume figures<br/>Trading Volume = $ <input className="text-black" value={numberWithCommas(tikiVolume.toFixed(0))} onChange={e => isNaN(Number(parseFloat(e.target.value.replace(/,/g, '')))) ? tikiVolume : setTikiVolume(Number(parseFloat(e.target.value.replace(/,/g, ''))))} /></p>
-          </CardBody>
-        </Card>
-
-        <Card className="col-span-2 lg:col-span-1">
-          <CardBody className="flex flex-col text-center items-center">
-            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
-            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Your {numberWithCommas(holdings)} TIKI Earns:</p><br/>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Day</span>
-            </div>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*7).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*7).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Week</span>
-            </div>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*30).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*30).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Month</span>
-            </div>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{numberWithCommas((earningsInBnb*365).toFixed(2))} BNB</span> (${numberWithCommas((earningsInDollars*365).toFixed(2))})</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Year</span>
-            </div>
-            <br/>
-            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Dynamic estimations based on trading volume of ${numberWithCommas(tikiVolume.toFixed(0))}</p>
-          </CardBody>
-        </Card>
-        <Card className="col-span-2 lg:col-span-1">
-          <CardBody className="flex flex-col text-center items-center">
-            <img className="w-32 h-32 mb-4 mt-4" src={require('../assets/img/money.png')} />
-            <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">By Reinvesting Dividends Every Day, Your {numberWithCommas(holdings)} TIKI Becomes:</p><br/>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 7)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 7)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Week</span>
-            </div>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 30)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In a Month</span>
-            </div>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 182)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 182)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 6 Months</span>
-            </div>
-            <div className="flex">
-              <p className="text-green-400 dark:text-green-400 text-2xl text-center"><span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'} TIKI</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 365)/holdings).toFixed(2) : '0'}x Earnings)</p><span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-1">In 1 Year</span>
-            </div>
-            <br/>
-            <p className="text-gray-600 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current $TIKI price (${tikiPrice.toFixed(4)})</p>
-          </CardBody>
-        </Card>
       </div>
     </div>
   )

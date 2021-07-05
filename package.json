@@ -1,8 +1,8 @@
 {
-  "name": "tikitoken",
-  "homepage": "http://tikitoken.github.io",
+  "name": "catfishfi",
+  "homepage": "http://catfishfi.github.io",
   "version": "1.0.0",
-  "description": "Hold TIKI, Earn Free BNB.",
+  "description": "Hold CatFish, Earn Free FISH.",
   "private": true,
   "scripts": {
     "tailwind:dev": "tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",

@@ -20,14 +20,6 @@ const routes = [
   {
     path: '/dashboard', // the url
     component: Dashboard, // view rendered
-  },
-  {
-    path: '/recovery',
-    component: Recovery,
-  },
-  {
-    path: '/tasks',
-    component: DailyTasks
   }
   // {
   //   path: '/tikituesday',
