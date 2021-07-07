@@ -64,7 +64,7 @@ function Dashboard(props) {
             <div>
               <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total FISH Paid</p>
               
-              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`}</span><span className="italic font-light text-md text-green-400"> ~${numberWithCommas(((paid / 1e18)*bnbPrice).toFixed(2))}</span></p>
+              <p className="text-lg font-semibold text-gray-700 dark:text-gray-200"><span className="text-yellow-300">{`${(paid / 1e18).toFixed(4)}`}</span><span className="italic font-light text-md text-green-400"> ~${numberWithCommas(((paid / 1e18)*fishPrice).toFixed(2))}</span></p>
             </div>
           </CardBody>
         </Card>
@@ -175,7 +175,7 @@ function Dashboard(props) {
           <CardBody className="flex flex-col text-center items-center">
             <img className="w-48 h-32 mb-4 mt-4" src={require('../assets/img/bnb.png')} />
             <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total FISH Paid To CatFish Holders</p><br/>
-            <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">FISH</span><br/> = ${numberWithCommas((fishPrice*totalPaid).toFixed(0))}</p>
+            <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">{numberWithCommas(totalPaid)} <span className="text-yellow-300">FISH</span><br/> = ${numberWithCommas((fishPrice*totalPaid).toFixed(2))}</p>
           </CardBody>
         </Card>
 

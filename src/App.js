@@ -88,14 +88,14 @@ async function getBnbPrice() {
   const functionResponse = await getAmountsOut(`${1 * Math.pow(10, bnb.decimals)}`, [bnb.address, busd.address])
   const priceInUsd = Number(functionResponse.amounts[1].toString()) / Math.pow(10, busd.decimals)
   // console.log('bnb', priceInUsd)
-  return priceInUsd
+  return priceInUsd*1e12
 }
 
 async function getFishPrice() {
   const functionResponse = await getAmountsOut(`${1 * Math.pow(10, fish.decimals)}`, [fish.address, busd.address])
   const priceInUsd = Number(functionResponse.amounts[1].toString()) / Math.pow(10, busd.decimals)
   // console.log('bnb', priceInUsd)
-  return priceInUsd
+  return priceInUsd*1e12
 }
 
 async function getTikiVolume() {
@@ -157,7 +157,7 @@ function App() {
 
   useEffect(() => {
     tikiContract.getTotalDividendsDistributed().then(total => {
-      setTotalPaid((total/1e18).toFixed(0))
+      setTotalPaid((total/1e18).toFixed(2))
       setTimeout(function(){ setRefreshTimeData(!refreshTimeData) }, 5000);
     })
   }, [refreshTimeData])
